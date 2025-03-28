@@ -1,0 +1,107 @@
+<!-- 
+This was created by Davin Ward, basherboo, and ChatGPT (mostly ChatGPT loll)
+
+I defiitley know what this does (no i dont)
+
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1 id="head0">Loading...</h1>
+    <p id="output0">Loading...</p>
+    <p id="output1">Loading...</p>
+
+<script>
+function addZero(i) {
+    if(i < 10) {
+        var i = "0" + i;
+        return i;
+    }
+    return i.toString();
+}
+
+function outputRealDate() {
+    function updateDate() {
+        const currentTime = new Date();
+        const weekday = ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"];
+        const month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        
+        const realDayOfMonth = addZero(currentTime.getDate());
+        const realMonth = month[currentTime.getMonth()];
+        const realYear = addZero(currentTime.getFullYear());
+        const realHours = addZero(currentTime.getHours());
+        const realMins = addZero(currentTime.getMinutes());
+        const realSecs = addZero(currentTime.getSeconds());
+        const realDay = weekday[currentTime.getDay()];
+        
+        document.getElementById("output0").innerHTML = `The real date is: ${realDay} ${realMonth} ${realDayOfMonth} ${realYear} ${realHours}:${realMins}:${realSecs}`;
+    }
+    setInterval(updateDate, 100);
+    updateDate();
+}
+
+function outputRoleplayDate() {
+      function updateRoleplayDate() {
+            const startTime = new Date(2025, 2, 27, 0, 0, 0);
+            const now = new Date();
+
+            const msInRealDay = 24 * 60 * 60 * 1000;
+            const msInRpDay = (91.25 * msInRealDay) / 365;
+
+            const realElapsedMs = now - startTime;
+            const rpElapsedMs = realElapsedMs * (365 / 91.25);
+
+            const rpDaysElapsed = rpElapsedMs / msInRpDay;
+            const rpYearsElapsed = rpDaysElapsed / 365;
+
+            const rpYear = 2025 + Math.floor(rpYearsElapsed);
+            const rpDayOfYear = (Math.floor(rpDaysElapsed % 365) + 86) % 365;
+
+            const weekday = ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"];
+            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+            const monthLengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+            let rpMonthIndex = 0;
+            let rpDayOfMonth = rpDayOfYear;
+
+            while (rpDayOfMonth >= monthLengths[rpMonthIndex]) {
+                  rpDayOfMonth -= monthLengths[rpMonthIndex];
+                  rpMonthIndex++;
+            }
+            rpDayOfMonth += 1;
+
+            const rpDayFraction = rpDaysElapsed % 1;
+            const rpHours = Math.floor(rpDayFraction * 24);
+            const rpMinutes = Math.floor((rpDayFraction * 24 * 60) % 60);
+            const rpSeconds = Math.floor((rpDayFraction * 24 * 60 * 60) % 60);
+
+            const rpDay = weekday[Math.floor(rpDayFraction * 7)];
+
+            document.getElementById("output1").innerHTML = `RP Date: ${rpDay} ${months[rpMonthIndex]} ${rpDayOfMonth}, ${rpYear} ${addZero(rpHours)}:${addZero(rpMinutes)}:${addZero(rpSeconds)}`;
+            document.getElementById("head0").innerHTML = `This is an Rp time teller for Perang. The thing may not be wroking properly until ${startTime}, so hold tight until then!`;
+            
+            if (realElapsedMs < 0) {
+                  document.getElementById("head0").innerHTML = `This is an Rp time teller for Perang. The thing may not be wroking properly until ${startTime}, so hold tight until then!`;
+            }
+            else if (realElapsedMs >= 0) {
+                  document.getElementById("head0").innerHTML = `Perang RP Time Conversion`;
+            }
+      }
+    
+    setInterval(updateRoleplayDate, 100);
+    updateRoleplayDate();
+}
+
+// Call both functions
+outputRealDate();
+outputRoleplayDate();</script>
+</body>
+</html>
